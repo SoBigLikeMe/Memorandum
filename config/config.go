@@ -6,6 +6,7 @@ import (
 	"strings"
 )
 
+//初始化变量
 var (
 	AppMode    string
 	HttpPort   string
@@ -18,14 +19,20 @@ var (
 )
 
 func Init() {
+	//加载配置文件
 	file, err := ini.Load("./config/config.ini")
 	if err != nil {
 		println("配置文件路径错误")
 	}
-	LoadServer(file)
-	LoadMysql(file)
+
+	LoadServer(file) //加载Server配置
+	LoadMysql(file)  //加载mysql配置
+
+	//mysql连接指令
 	path := strings.Join([]string{DbUser, ":", DbPassWord, "@tcp(", DbHost, ":", DbPort, ")/", DbName, "?charset=utf8&parseTime=true"}, "")
-	println(path)
+	//println(path)
+
+	//进行数据库连接
 	model.Database(path)
 }
 

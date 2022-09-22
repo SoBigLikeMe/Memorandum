@@ -2,6 +2,7 @@ package model
 
 import "github.com/jinzhu/gorm"
 
+//建表Task
 type Task struct {
 	gorm.Model
 	User      User   `gorm:"ForeignKey"`
