@@ -7,3 +7,8 @@ type Response struct {
 	Msg    string      `json:"msg"`
 	Error  string      `json:"error"`
 }
+
+type TokenData struct {
+	User  interface{} `json:"user"`
+	Token string      `json:"token"`
+}

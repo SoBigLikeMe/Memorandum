@@ -1,7 +1,9 @@
 package service
 
 import (
+	"github.com/jinzhu/gorm"
 	"memorandum/model"
+	"memorandum/pkg/utils"
 	"memorandum/serialzer"
 )
 
@@ -49,5 +51,53 @@ func (service UserService) Register() serialzer.Response {
 		Data:   nil,
 		Msg:    "创建成功",
 		Error:  "",
+	}
+}
+
+func (service UserService) Login() serialzer.Response {
+	var user model.User
+
+	//查询数据库中是否存在
+	if err := model.DB.Where("user_name=?", service.UserName).First(&user).Error; err != nil {
+		if gorm.IsRecordNotFoundError(err) {
+			return serialzer.Response{
+				Status: 400,
+				Msg:    "用户不存在，请先登录",
+			}
+		}
+
+		//其他因素导致无法登录
+		return serialzer.Response{
+			Status: 500,
+			Data:   nil,
+			Msg:    "数据库错误",
+			Error:  "",
+		}
+	}
+
+	if user.CheckPassword(service.Password) == false {
+		return serialzer.Response{
+			Status: 400,
+			Data:   nil,
+			Msg:    "密码错误",
+			Error:  "",
+		}
+	}
+
+	//发一个token，为了其他需要身份验证的功能给前端存储，例如创建备忘录
+
+	token, err := utils.GenerateToken(user.ID, service.UserName, service.Password)
+	if err != nil {
+		return serialzer.Response{
+			Status: 500,
+			Data:   nil,
+			Msg:    "Token签发错误",
+			Error:  "",
+		}
+	}
+	return serialzer.Response{
+		Status: 200,
+		Data:   serialzer.TokenData{User: serialzer.BuildUser(user), Token: token},
+		Msg:    "登陆成功",
 	}
 }
