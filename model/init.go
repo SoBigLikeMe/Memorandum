@@ -11,6 +11,7 @@ var DB *gorm.DB
 
 func Database(connstring string) {
 	db, err := gorm.Open("mysql", connstring)
+
 	if err != nil {
 		println("连接错误")
 		println(err)

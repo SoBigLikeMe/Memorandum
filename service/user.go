@@ -54,6 +54,7 @@ func (service UserService) Register() serialzer.Response {
 	}
 }
 
+// 登录
 func (service UserService) Login() serialzer.Response {
 	var user model.User
 
