@@ -18,3 +18,14 @@ func CreateTask(c *gin.Context) {
 		c.JSON(400, err)
 	}
 }
+
+func ShowTask(c *gin.Context) {
+	var ShowTask service.ShowTaskService
+	if err := c.ShouldBind(&ShowTask); err == nil {
+		res := ShowTask.Show(c.Param("id")) // 从请求头中拿到id
+		c.JSON(200, res)
+	} else {
+		logging.Println(err)
+		c.JSON(400, err)
+	}
+}
