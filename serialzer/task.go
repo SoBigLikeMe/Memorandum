@@ -13,6 +13,12 @@ type Task struct {
 	EndTime   int64  `json:"endTime"`
 }
 
+//DataList 带有总数的Data结构
+type DataList struct {
+	Item  interface{} `json:"item"`
+	Total uint        `json:"total"`
+}
+
 // BuildTask 序列化备忘录
 func BuildTask(item model.Task) Task {
 	return Task{
@@ -23,5 +29,25 @@ func BuildTask(item model.Task) Task {
 		CreateAt:  item.CreatedAt.Unix(),
 		StartTime: item.StratTime,
 		EndTime:   item.EndTime,
+	}
+}
+
+func BuildTasks(items []model.Task) (tasks []Task) {
+	for _, item := range items {
+		task := BuildTask(item)
+		tasks = append(tasks, task)
+	}
+	return tasks
+}
+
+//BulidListResponse 带有总数的列表构建器
+func BuildListResponse(items interface{}, total uint) Response {
+	return Response{
+		Status: 200,
+		Data: DataList{
+			Item:  items,
+			Total: total,
+		},
+		Msg: "ok",
 	}
 }

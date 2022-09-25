@@ -31,3 +31,27 @@ func ShowTask(c *gin.Context) {
 		c.JSON(400, err)
 	}
 }
+
+// ListTasks 展示所有备忘录
+func ListTasks(c *gin.Context) {
+	listService := service.ListTasksService{}
+	chaim, _ := utils.ParseToken(c.GetHeader("Authorization"))
+	if err := c.ShouldBind(&listService); err == nil {
+		res := listService.List(chaim.Id)
+		c.JSON(200, res)
+	} else {
+		logging.Error()
+		c.JSON(400, err)
+	}
+}
+
+func UpdateTask(c *gin.Context) {
+	updateTaskService := service.UpdateTaskService{}
+	if err := c.ShouldBind(&updateTaskService); err == nil {
+		res := updateTaskService.Update(c.Param("id"))
+		c.JSON(200, res)
+	} else {
+		logging.Error()
+		c.JSON(400, err)
+	}
+}

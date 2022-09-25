@@ -5,7 +5,7 @@ import (
 	"memorandum/service"
 )
 
-//用户注册
+// UserRegister 用户注册
 func UserRegister(c *gin.Context) {
 	var userRegister service.UserService
 
@@ -18,7 +18,7 @@ func UserRegister(c *gin.Context) {
 	}
 }
 
-//用户登录
+// UserLogin 用户登录
 func UserLogin(c *gin.Context) {
 	var userLogin service.UserService
 

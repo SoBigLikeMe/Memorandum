@@ -26,8 +26,10 @@ func NewRouter() *gin.Engine {
 		authed := v1.Group("/")
 		authed.Use(middleware.JWT()) // 使用token鉴权中间件
 		{
-			authed.POST("task", api.CreateTask)  // 创建备忘录
-			authed.GET("task/:id", api.ShowTask) // 展示备忘录
+			authed.POST("task", api.CreateTask)    // 创建备忘录
+			authed.GET("task/:id", api.ShowTask)   // 展示备忘录
+			authed.GET("tasks", api.ListTasks)     //展示所有备忘录
+			authed.PUT("task/:id", api.UpdateTask) //更新备忘录
 		}
 	}
 
