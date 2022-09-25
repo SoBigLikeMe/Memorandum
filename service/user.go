@@ -12,6 +12,7 @@ type UserService struct {
 	Password string `form:"password" json:"password" binding:"required,min=3,max=15" example:"FanOne"`
 }
 
+// Register 注册服务
 func (service UserService) Register() serialzer.Response {
 	var user model.User
 	var count int
@@ -54,7 +55,7 @@ func (service UserService) Register() serialzer.Response {
 	}
 }
 
-// 登录
+// Login 登录服务
 func (service UserService) Login() serialzer.Response {
 	var user model.User
 
@@ -86,7 +87,6 @@ func (service UserService) Login() serialzer.Response {
 	}
 
 	//发一个token，为了其他需要身份验证的功能给前端存储，例如创建备忘录
-
 	token, err := utils.GenerateToken(user.ID, service.UserName, service.Password)
 	if err != nil {
 		return serialzer.Response{
@@ -96,6 +96,7 @@ func (service UserService) Login() serialzer.Response {
 			Error:  "",
 		}
 	}
+
 	return serialzer.Response{
 		Status: 200,
 		Data:   serialzer.TokenData{User: serialzer.BuildUser(user), Token: token},

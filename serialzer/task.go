@@ -13,6 +13,7 @@ type Task struct {
 	EndTime   int64  `json:"endTime"`
 }
 
+// BuildTask 序列化备忘录
 func BuildTask(item model.Task) Task {
 	return Task{
 		Id:        item.ID,
