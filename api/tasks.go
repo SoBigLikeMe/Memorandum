@@ -20,7 +20,7 @@ func CreateTask(c *gin.Context) {
 	}
 }
 
-// ShowTask 展示备忘录
+// ShowTask 展示一条备忘录
 func ShowTask(c *gin.Context) {
 	var ShowTask service.ShowTaskService
 	if err := c.ShouldBind(&ShowTask); err == nil {
@@ -61,6 +61,18 @@ func SearchTask(c *gin.Context) {
 	claim, _ := utils.ParseToken(c.GetHeader("Authorization"))
 	if err := c.ShouldBind(&searchTaskService); err == nil {
 		res := searchTaskService.Search(claim.Id)
+		c.JSON(200, res)
+	} else {
+		logging.Error()
+		c.JSON(400, err)
+	}
+}
+
+func DeleteTask(c *gin.Context) {
+	deleteTaskService := service.DeleteTaskService{}
+	claim, _ := utils.ParseToken(c.GetHeader("Authorization"))
+	if err := c.ShouldBind(&deleteTaskService); err == nil {
+		res := deleteTaskService.Delete(claim.Id, c.Param("id"))
 		c.JSON(200, res)
 	} else {
 		logging.Error()

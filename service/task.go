@@ -16,6 +16,8 @@ type CreateTaskService struct {
 
 type ShowTaskService struct{}
 
+type DeleteTaskService struct{}
+
 type UpdateTaskService struct {
 	Title   string `json:"title" form:"title"`
 	Content string `json:"content" form:"content"`
@@ -140,5 +142,35 @@ func (s SearchTaskService) Search(id uint) serialzer.Response {
 		Status: 200,
 		Msg:    "查找成功",
 		Data:   serialzer.BuildTasks(tasks),
+	}
+}
+
+// Delete 删除备忘录
+func (s DeleteTaskService) Delete(id uint, tid string) serialzer.Response {
+	var task model.Task
+	code := 200
+	err := model.DB.Where("id = ? AND uid = ?", tid, id).Find(&task).Error
+
+	if err != nil {
+		code = 500
+		return serialzer.Response{
+			Status: code,
+			Msg:    "权限不足",
+		}
+	}
+
+	err = model.DB.Delete(&task).Error
+
+	if err != nil {
+		code = 200
+		return serialzer.Response{
+			Status: code,
+			Msg:    "删除失败",
+			Error:  err.Error(),
+		}
+	}
+	return serialzer.Response{
+		Status: code,
+		Msg:    "删除成功",
 	}
 }
