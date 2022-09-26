@@ -30,6 +30,7 @@ func NewRouter() *gin.Engine {
 			authed.GET("task/:id", api.ShowTask)   // 展示备忘录
 			authed.GET("tasks", api.ListTasks)     //展示所有备忘录
 			authed.PUT("task/:id", api.UpdateTask) //更新备忘录
+			authed.POST("search", api.SearchTask)  //查询备忘录
 		}
 	}
 

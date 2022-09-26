@@ -22,6 +22,10 @@ type UpdateTaskService struct {
 	Status  int    `json:"status" form:"status"` //0是未做，1是已做
 }
 
+type SearchTaskService struct {
+	Info string `form:"info" json:"info"`
+}
+
 type ListTasksService struct {
 	Limit int `form:"limit" json:"limit"`
 	Start int `form:"start" json:"start"`
@@ -80,6 +84,7 @@ func (s ShowTaskService) Show(tid string) serialzer.Response {
 	}
 }
 
+// List 展示所有备忘录
 func (service *ListTasksService) List(id uint) serialzer.Response {
 	var tasks []model.Task
 	var total int64
@@ -92,6 +97,7 @@ func (service *ListTasksService) List(id uint) serialzer.Response {
 	return serialzer.BuildListResponse(serialzer.BuildTasks(tasks), uint(total))
 }
 
+// Update 更新备忘录
 func (service *UpdateTaskService) Update(id string) serialzer.Response {
 	var task model.Task
 	model.DB.Model(model.Task{}).Where("id = ?", id).First(&task)
@@ -112,5 +118,27 @@ func (service *UpdateTaskService) Update(id string) serialzer.Response {
 	return serialzer.Response{
 		Status: code,
 		Data:   "修改成功",
+	}
+}
+
+// Search 模糊查找备忘录
+func (s SearchTaskService) Search(id uint) serialzer.Response {
+	var tasks []model.Task
+	count := 0
+	err := model.DB.Model(&model.Task{}).Preload("User").Where("uid=?", id).
+		Where("title like ? or content like ?", "%"+s.Info+"%", "%"+s.Info+"%").
+		Count(&count).Find(&tasks)
+	if err == nil {
+		return serialzer.Response{
+			Status: 400,
+			Data:   nil,
+			Msg:    "查询失败",
+		}
+	}
+
+	return serialzer.Response{
+		Status: 200,
+		Msg:    "查找成功",
+		Data:   serialzer.BuildTasks(tasks),
 	}
 }
