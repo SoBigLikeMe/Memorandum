@@ -45,6 +45,7 @@ func ListTasks(c *gin.Context) {
 	}
 }
 
+// UpdateTask 更新备忘录
 func UpdateTask(c *gin.Context) {
 	updateTaskService := service.UpdateTaskService{}
 	if err := c.ShouldBind(&updateTaskService); err == nil {
@@ -56,6 +57,7 @@ func UpdateTask(c *gin.Context) {
 	}
 }
 
+// SearchTask 模糊查找备忘录
 func SearchTask(c *gin.Context) {
 	searchTaskService := service.SearchTaskService{}
 	claim, _ := utils.ParseToken(c.GetHeader("Authorization"))
@@ -68,6 +70,7 @@ func SearchTask(c *gin.Context) {
 	}
 }
 
+// DeleteTask 删除备忘录
 func DeleteTask(c *gin.Context) {
 	deleteTaskService := service.DeleteTaskService{}
 	claim, _ := utils.ParseToken(c.GetHeader("Authorization"))
