@@ -12,6 +12,8 @@ type UserService struct {
 	Password string `form:"password" json:"password" binding:"required,min=3,max=15"   `
 }
 
+type UserId struct{}
+
 // Register 注册服务
 func (service UserService) Register() serialzer.Response {
 	var user model.User
@@ -101,5 +103,27 @@ func (service UserService) Login() serialzer.Response {
 		Status: 200,
 		Data:   serialzer.TokenData{User: serialzer.BuildUser(user), Token: token},
 		Msg:    "登陆成功",
+	}
+}
+
+// ReturnId 返回用户id
+func (service UserService) ReturnId(name string) serialzer.Response {
+	var user model.User
+
+	err := model.DB.Select("id").Where("user_name = ?", name).First(&user).Error
+	if err == nil {
+		return serialzer.Response{
+			Status: 200,
+			Data:   serialzer.BuildId(user),
+			Msg:    "id返回成功",
+			Error:  "",
+		}
+	}
+
+	return serialzer.Response{
+		Status: 400,
+		Data:   nil,
+		Msg:    "id返回失败",
+		Error:  err.Error(),
 	}
 }

@@ -9,6 +9,10 @@ type User struct {
 	CreateAt int64  `json:"create_at" from:"create_at"`
 }
 
+type Id struct {
+	ID uint `json:"id" ,form:"id"`
+}
+
 //BuildUser 序列化用户
 func BuildUser(user model.User) User {
 	return User{
@@ -16,4 +20,8 @@ func BuildUser(user model.User) User {
 		UserName: user.UserName,
 		CreateAt: user.CreatedAt.Unix(),
 	}
+}
+
+func BuildId(user model.User) Id {
+	return Id{ID: user.ID}
 }

@@ -23,8 +23,9 @@ func CreateTask(c *gin.Context) {
 // ShowTask 展示一条备忘录
 func ShowTask(c *gin.Context) {
 	var ShowTask service.ShowTaskService
+	claim, _ := utils.ParseToken(c.GetHeader("Authorization"))
 	if err := c.ShouldBind(&ShowTask); err == nil {
-		res := ShowTask.Show(c.Param("id")) // 从请求头中拿到id
+		res := ShowTask.Show(c.Param("id"), claim.Id) // 从请求头中拿到id
 		c.JSON(200, res)
 	} else {
 		logging.Println(err)
@@ -35,9 +36,9 @@ func ShowTask(c *gin.Context) {
 // ListTasks 展示所有备忘录
 func ListTasks(c *gin.Context) {
 	listService := service.ListTasksService{}
-	chaim, _ := utils.ParseToken(c.GetHeader("Authorization"))
+	claim, _ := utils.ParseToken(c.GetHeader("Authorization"))
 	if err := c.ShouldBind(&listService); err == nil {
-		res := listService.List(chaim.Id)
+		res := listService.List(claim.Id)
 		c.JSON(200, res)
 	} else {
 		logging.Error()

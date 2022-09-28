@@ -67,9 +67,19 @@ func (service *CreateTaskService) Create(id uint) serialzer.Response {
 }
 
 //Show 展示一条备忘录
-func (s ShowTaskService) Show(tid string) serialzer.Response {
+func (s ShowTaskService) Show(tid string, id uint) serialzer.Response {
 	var task model.Task
 	code := 200
+
+	searchErr := model.DB.Where("id = ? AND uid = ?", tid, id).Find(&task).Error
+	if searchErr != nil {
+		code = 500
+		return serialzer.Response{
+			Status: code,
+			Msg:    "权限不足",
+		}
+	}
+
 	err := model.DB.Find(&task, tid).Error
 	if err != nil {
 		code = 500
@@ -78,6 +88,7 @@ func (s ShowTaskService) Show(tid string) serialzer.Response {
 			Msg:    "查询失败",
 		}
 	}
+
 	return serialzer.Response{
 		Status: code,
 		Data:   serialzer.BuildTask(task),

@@ -2,6 +2,7 @@ package api
 
 import (
 	"github.com/gin-gonic/gin"
+	"memorandum/pkg/utils"
 	"memorandum/service"
 )
 
@@ -25,6 +26,20 @@ func UserLogin(c *gin.Context) {
 	//绑定登录数据
 	if err := c.ShouldBind(&userLogin); err == nil {
 		res := userLogin.Login()
+		c.JSON(200, res)
+	} else {
+		c.JSON(400, err)
+	}
+}
+
+// ReturnID 返回用户id
+func ReturnID(c *gin.Context) {
+	var UserService service.UserService
+
+	//绑定数据
+	claim, _ := utils.ParseToken(c.GetHeader("Authorization"))
+	if err := c.ShouldBind(&UserService); err != nil {
+		res := UserService.ReturnId(claim.UserName)
 		c.JSON(200, res)
 	} else {
 		c.JSON(400, err)
