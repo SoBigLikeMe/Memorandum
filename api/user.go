@@ -26,7 +26,7 @@ func UserLogin(c *gin.Context) {
 	//绑定登录数据
 	if err := c.ShouldBind(&userLogin); err == nil {
 		res := userLogin.Login()
-		c.JSON(200, res)
+		c.HTML(200, "show.tmpl", res)
 	} else {
 		c.JSON(400, err)
 	}

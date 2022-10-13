@@ -7,7 +7,13 @@ import (
 	"memorandum/service"
 )
 
-// CreateTask 创建备忘录
+// CreateTask ShowAccount godoc
+// @Summary      创建新的备忘录
+// @Description  传入token解析id绑定到备忘录数据
+// @Tags         accounts
+// @Accept       application/json
+// @Success      200 {object}
+// @Router       /api/v1/CreateTask
 func CreateTask(c *gin.Context) {
 	var createTask service.CreateTaskService
 	claim, _ := utils.ParseToken(c.GetHeader("Authorization")) //传入token
@@ -20,7 +26,13 @@ func CreateTask(c *gin.Context) {
 	}
 }
 
-// ShowTask 展示一条备忘录
+// ShowTask
+// @Summary		 创建新的备忘录
+// @Description  传入token从请求头中获取备忘录id返回备忘录(json)
+// @Tags		 tid
+// @Accept       application/json
+// @Success      200 {object}
+// @Router       /api/v1/ShowTask/:id
 func ShowTask(c *gin.Context) {
 	var ShowTask service.ShowTaskService
 	claim, _ := utils.ParseToken(c.GetHeader("Authorization"))
@@ -33,7 +45,13 @@ func ShowTask(c *gin.Context) {
 	}
 }
 
-// ListTasks 展示所有备忘录
+// ListTasks
+// @Summary		 展示所有备忘录
+// @Description  解析token拿到id，查询id所创建的备忘录
+// @Tags		 id
+// @Accept       application/json
+// @Success      200 {object}
+// @Router       /api/v1/ListTasks
 func ListTasks(c *gin.Context) {
 	listService := service.ListTasksService{}
 	claim, _ := utils.ParseToken(c.GetHeader("Authorization"))
@@ -46,7 +64,13 @@ func ListTasks(c *gin.Context) {
 	}
 }
 
-// UpdateTask 更新备忘录
+// UpdateTask
+// @Summary		 更新备忘录
+// @Description  解析token拿到id，查询id更新的备忘录
+// @Tags		 tid
+// @Accept       application/json
+// @Success      200 {object}
+// @Router       /api/v1/UpdateTask
 func UpdateTask(c *gin.Context) {
 	updateTaskService := service.UpdateTaskService{}
 	if err := c.ShouldBind(&updateTaskService); err == nil {
@@ -58,7 +82,13 @@ func UpdateTask(c *gin.Context) {
 	}
 }
 
-// SearchTask 模糊查找备忘录
+// SearchTask
+// @Summary		 模糊查询备忘录
+// @Description
+// @Tags		 title
+// @Accept       application/json
+// @Success      200 {object}
+// @Router       /api/v1/SearchTask
 func SearchTask(c *gin.Context) {
 	searchTaskService := service.SearchTaskService{}
 	claim, _ := utils.ParseToken(c.GetHeader("Authorization"))
@@ -71,7 +101,13 @@ func SearchTask(c *gin.Context) {
 	}
 }
 
-// DeleteTask 删除备忘录
+// DeleteTask
+// @Summary		 删除备忘录
+// @Description	 解析token,拿到id删除对应的备忘录
+// @Tags		 id
+// @Accept       application/json
+// @Success      200 {object}
+// @Router       /api/v1/SearchTask
 func DeleteTask(c *gin.Context) {
 	deleteTaskService := service.DeleteTaskService{}
 	claim, _ := utils.ParseToken(c.GetHeader("Authorization"))

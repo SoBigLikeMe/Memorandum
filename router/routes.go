@@ -14,6 +14,8 @@ func NewRouter() *gin.Engine {
 	store := cookie.NewStore([]byte("something-very-secret"))
 	r.Use(sessions.Sessions("mysession", store))
 
+	r.LoadHTMLGlob("template/*")
+
 	r.NoRoute(func(c *gin.Context) {
 		c.JSON(404, gin.H{"msg": "路径错误"})
 	})
