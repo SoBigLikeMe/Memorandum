@@ -1,6 +1,7 @@
 package api
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"memorandum/pkg/utils"
 	"memorandum/service"
@@ -28,6 +29,7 @@ func UserLogin(c *gin.Context) {
 		res := userLogin.Login()
 		c.JSON(200, res)
 	} else {
+		fmt.Printf("%v\n", err)
 		c.JSON(400, err)
 	}
 }

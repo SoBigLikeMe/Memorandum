@@ -24,6 +24,14 @@ func NewRouter() *gin.Engine {
 		context.String(http.StatusOK, "hello world")
 	})
 
+	{
+		r.LoadHTMLFiles("templates/html/login.html")
+		r.Static("/dwz", "templates/statics")
+		r.GET("/login", func(context *gin.Context) {
+			context.HTML(200, "login.html", "")
+		})
+	}
+
 	v1 := r.Group("api/v1")
 	{
 		//用户操作
