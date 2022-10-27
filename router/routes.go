@@ -19,7 +19,7 @@ func NewRouter() *gin.Engine {
 	})
 
 	//网页图标
-	r.StaticFile("/favicon.ico", "templates/favicon.ico")
+	r.StaticFile("/favicon.ico", "assets/favicon.ico")
 
 	r.GET("/", func(context *gin.Context) {
 		context.String(http.StatusOK, "hello world")
