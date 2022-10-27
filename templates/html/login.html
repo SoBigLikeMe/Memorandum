@@ -4,14 +4,15 @@
   <meta charset="utf-8">
   <title>Login</title>
   <!-- Link CSS -->
-	<link rel="stylesheet" href="dwz/css/style.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="dwz/css/style.css">
 </head>
 <body>
 	<div class="wrapper">
 		<form class="form-signin" action="http://localhost:3000/api/v1/user/login" method="post" id="form1">
-			<h2 class="form-signin-heading text-center">Login Form</h2>
-			<input type="text" name="user_name" class="form-control" placeholder="用户名" required><br>
-			<input type="password" name="password"class="form-control" placeholder="密码" required><br>
+			<h2 class="form-signin-heading text-center">Login</h2>
+			<input type="text" class="form-control" name="user_name" placeholder="Username">
+			<input type="password" class="form-control" name="password" placeholder="Password" required="">
 			<button class="btn btn-lg btn-primary btn-block" form="form1">Login</button>
 		</form>
 	</div>

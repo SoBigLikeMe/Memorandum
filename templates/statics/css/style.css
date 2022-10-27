@@ -1,11 +1,6 @@
 body{
 	background: cornflowerblue;
 }
-
-button{
-	text-align: center;
-}
-
 .wrapper{
 	margin: 80px;
 }
@@ -18,14 +13,11 @@ button{
 	border-radius: 10px;
 }
 .form-signin .form-signin-heading, .form-signin .checkbox{
-	text-align: center;
 	margin-bottom: 30px;
 }
 .form-signin input[type="text"], .form-signin input[type="password"]{
-	text-align: center;
 	margin-bottom: 10px;
 }
 .form-signin .form-control{
-	text-align: center;
 	padding: 10px;
 }
