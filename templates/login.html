@@ -1,21 +1,37 @@
 <!DOCTYPE html>
-<html lang="Zh-CN">
+ <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Login</title>
-  <!-- Link CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  <link rel="stylesheet" href="dwz/css/login.css">
+    <title>login test</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="dwz/css/login.css">
+    <script type="text/javascript">
+        function login() {
+            $.ajax({
+                //几个参数需要注意一下
+                type: "POST",//方法类型
+                dataType: "json",//预期服务器返回的数据类型
+                url: "/api/v1/user/login" ,//url
+                data: $('#form1').serialize(),
+                success: function (result) {
+                    console.log(result);//打印服务端返回的数据(调试用)
+                },
+                error : function() {
+                    alert("异常！");
+                }
+            });
+        }
+    </script>
 </head>
 <body>
-	<div class="wrapper">
-		<form class="form-signin" action="http://localhost:3000/api/v1/user/login" method="post" id="form1">
-			<h2 class="form-signin-heading text-center">Login</h2>
+<div class="wrapper">
+    <form class="form-signin" id="form1" onsubmit="return false" action="#" method="post">
+        <h2 class="form-signin-heading text-center">Login</h2>
 			<input type="text" class="form-control" name="user_name" placeholder="Username">
 			<input type="password" class="form-control" name="password" placeholder="Password" required="">
-			<button class="btn btn-lg btn-primary btn-block" form="form1">Login</button>
-			<a href="http://localhost:3000/register">点我注册</a>
-		</form>
-	</div>
+        <button class="btn btn-lg btn-primary btn-block" onclick="login()">Login</button>
+    </form>
+</div>
 </body>
 </html>
