@@ -18,17 +18,29 @@ func NewRouter() *gin.Engine {
 		c.JSON(404, gin.H{"msg": "路径错误"})
 	})
 
+	//网页图标
 	r.StaticFile("/favicon.ico", "templates/favicon.ico")
 
 	r.GET("/", func(context *gin.Context) {
 		context.String(http.StatusOK, "hello world")
 	})
 
+	//HTML模板渲染
+	r.LoadHTMLGlob("templates/*")
+	//静态资源加载
+	r.Static("/dwz", "assets/statics")
+
+	//用户登录页面渲染
 	{
-		r.LoadHTMLFiles("templates/html/login.html")
-		r.Static("/dwz", "templates/statics")
 		r.GET("/login", func(context *gin.Context) {
 			context.HTML(200, "login.html", "")
+		})
+	}
+
+	//用户注册页面渲染
+	{
+		r.GET("/register", func(context *gin.Context) {
+			context.HTML(200, "register.html", "")
 		})
 	}
 
