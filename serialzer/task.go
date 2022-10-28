@@ -6,7 +6,6 @@ type Task struct {
 	Id        uint   `json:"id" example:"1"`
 	Title     string `json:"title"`
 	Content   string `json:"content"`
-	View      uint64 `json:"view"`
 	Status    int    `json:"status"`
 	CreateAt  int64  `json:"createAt"`
 	StartTime int64  `json:"startTime"`

@@ -17,14 +17,13 @@
                 success: function (result) {
                     console.log(result)
                     $(".form-control,.btn").remove();
-                    // var username = result.data.user.user_name
-                    // var id = result.data.user.id
-                    // var token = result.data.token
-                    // $(".form-signin-heading").after(id);
+
+                    var mydate = new Date();
                     var username=$("<p></p>").text("username:   "+result.data.user.user_name);
                     var id=$("<p></p>").text("id:   "+result.data.user.id);
-                    var token=$("<p></p>").text("token: "+result.data.token);
-                    $(".form-signin-heading").after(username,id,token);
+                    var nowtime = $("<p></p>").text(mydate.toLocaleTimeString());
+                    // var token=$("<p></p>").text("token: "+result.data.token);
+                    $(".form-signin-heading").after(username,id,nowtime);
 
                     var a = $("<a href='/tasks'></a>").text("点此跳转查询所有备忘录")
                     $(".form-signin-heading").after(a)
@@ -32,10 +31,10 @@
                     var token = result.data.token;
                     //存放userToken
                      window.localStorage.setItem('userToken', token);
-                     console.log(window.localStorage.getItem("userToken"))
+                     // console.log(window.localStorage.getItem("userToken"));
                 },
                 error : function() {
-                    alert("异常！");
+                    alert("用户名或密码错误！");
                 }
             });
         }
