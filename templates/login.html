@@ -15,7 +15,16 @@
                 url: "/api/v1/user/login" ,//url
                 data: $('#form1').serialize(),
                 success: function (result) {
-                    console.log(result);//打印服务端返回的数据(调试用)
+                    console.log(result)
+                    $(".form-control,.btn").remove();
+                    // var username = result.data.user.user_name
+                    // var id = result.data.user.id
+                    // var token = result.data.token
+                    // $(".form-signin-heading").after(id);
+                    var username=$("<p></p>").text("username:   "+result.data.user.user_name);
+                    var id=$("<p></p>").text("id:   "+result.data.user.id);
+                    var token=$("<p></p>").text("token: "+result.data.token);
+                    $(".form-signin-heading").after(username,id,token);
                 },
                 error : function() {
                     alert("异常！");

@@ -22,7 +22,7 @@ func NewRouter() *gin.Engine {
 	r.StaticFile("/favicon.ico", "assets/favicon.ico")
 
 	r.GET("/", func(context *gin.Context) {
-		context.String(http.StatusOK, "hello world")
+		context.Redirect(http.StatusMovedPermanently, "/login")
 	})
 
 	//HTML模板渲染
