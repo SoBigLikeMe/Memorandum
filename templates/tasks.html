@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+ <html lang="en">
+<head>
+    <title>login test</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="dwz/css/login.css">
+    <script type="text/javascript">
+        function tasks() {
+            var userToken = window.localStorage.getItem('userToken');
+            $.ajax({
+                //将token放入headers
+                headers: {
+                    "Authorization": userToken //此处放置请求到的用户token
+                },
+                url: "/api/v1/tasks", //请求url
+                type: "get",
+                dataType: 'json',
+                data: {
+
+                },
+                success: (data) => {
+                    console.log(data)
+                }
+            })
+        }
+    </script>
+</head>
+<body>
+<div >
+    <button onclick="tasks()">查询所有备忘录</button>
+</div>
+</body>
+</html>

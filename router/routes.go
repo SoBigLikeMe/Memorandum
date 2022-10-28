@@ -44,6 +44,13 @@ func NewRouter() *gin.Engine {
 		})
 	}
 
+	//查询备忘录
+	{
+		r.GET("/tasks", func(context *gin.Context) {
+			context.HTML(200, "tasks.html", "")
+		})
+	}
+
 	v1 := r.Group("api/v1")
 	{
 		//用户操作
