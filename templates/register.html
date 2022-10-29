@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="Zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>register</title>
+  <!-- Link CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="dwz/css/register.css">
+</head>
+<body>
+	<div class="wrapper">
+		<form class="form-signin" action="http://localhost:3000/api/v1/user/register" method="post" id="form1">
+			<h2 class="form-signin-heading text-center">注册</h2>
+			<input type="text" class="form-control" name="user_name" placeholder="Username">
+			<input type="password" class="form-control" name="password" placeholder="Password" required="">
+			<button class="btn btn-lg btn-primary btn-block" form="form1">register</button>
+		</form>
+	</div>
+</body>
+</html>
+`

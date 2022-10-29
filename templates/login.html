@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+ <html lang="en">
+<head>
+    <title>login test</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="dwz/css/login.css">
+    <script type="text/javascript">
+        function login() {
+            $.ajax({
+                //几个参数需要注意一下
+                type: "POST",//方法类型
+                dataType: "json",//预期服务器返回的数据类型
+                url: "/api/v1/user/login" ,//url
+                data: $('#form1').serialize(),
+                success: function (result) {
+                    console.log(result)
+                    $(".form-control,.btn").remove();
+
+                    var mydate = new Date();
+                    var username=$("<p></p>").text("username:   "+result.data.user.user_name);
+                    var id=$("<p></p>").text("id:   "+result.data.user.id);
+                    var nowtime = $("<p></p>").text(mydate.toLocaleTimeString());
+                    // var token=$("<p></p>").text("token: "+result.data.token);
+                    $(".form-signin-heading").after(username,id,nowtime);
+
+                    var a = $("<a href='/tasks'></a>").text("点此跳转查询所有备忘录")
+                    $(".form-signin-heading").after(a)
+
+                    var token = result.data.token;
+                    //存放userToken
+                     window.localStorage.setItem('userToken', token);
+                     // console.log(window.localStorage.getItem("userToken"));
+                },
+                error : function() {
+                    alert("用户名或密码错误！");
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+<div class="wrapper">
+    <form class="form-signin" id="form1" onsubmit="return false" action="#" method="post">
+        <h2 class="form-signin-heading text-center">Login</h2>
+			<input type="text" class="form-control" name="user_name" placeholder="Username">
+			<input type="password" class="form-control" name="password" placeholder="Password" required="">
+        <button class="btn btn-lg btn-primary btn-block" onclick="login()">Login</button>
+    </form>
+</div>
+</body>
+</html>
