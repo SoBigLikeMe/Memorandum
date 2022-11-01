@@ -11,6 +11,7 @@
 package service
 
 import (
+	"fmt"
 	"github.com/jinzhu/gorm"
 	logging "github.com/sirupsen/logrus"
 	"memorandum/model"
@@ -114,9 +115,9 @@ func (service *ListTasksService) List(id uint) serialzer.Response {
 	if service.Limit == 0 {
 		service.Limit = 15
 	}
-	model.DB.Model(model.Task{}).Preload("User").Where("uid = ?", id).Count(&total).
-		Limit(service.Limit).Offset((service.Start - 1) * service.Limit).
-		Find(&tasks)
+	err := model.DB.Model(model.Task{}).Preload("User").Where("uid = ?", id).Count(&total).
+		Limit(service.Limit).Offset((service.Start - 1) * service.Limit).Find(&tasks).Error
+	fmt.Printf("%v", err)
 	return serialzer.BuildListResponse(serialzer.BuildTasks(tasks), uint(total))
 }
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
  <html lang="en">
 <head>
-    <title>login test</title>
+    <title>memo</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -20,8 +20,32 @@
                 data: {
 
                 },
-                success: (data) => {
-                    console.log(data);
+                success: (result) => {
+                    console.log(result);
+                    // $.each(result.data.item,function(index,obj){
+                    // 		$("#tasksbody").after(
+                    // 		"<td><td>"+obj['id']+"<td><td>"+
+                    //             obj['content']+"</td>"+
+                    // 		"<td>"+obj['title']+"</td><td>");
+                    // 		});
+
+                    var list = result.data.item;
+
+                    var div1 = document.getElementById("div1");
+
+                    if(result.data.total == 0){
+                        alert("无内容")
+                    }
+
+                    var rows = [];
+                    for (var i = 0; i < list.length; i++) {
+                        var str = '<tr><th>' + (i + 1) + '</th><td>' + list[i].id + '</td><td>' + list[i].title
+                            + '</td><td>' + list[i].content + '</td><td>';
+                        rows.push(str);
+
+                        div1.innerHTML = '<table class="table table-success table-striped table-hover"><thead><tr><th scope="col">#</th><th scope="col">id</th><th scope="col">title</th><th scope="col">content</th></tr></thead><tbody>'
+                            + rows.join("") + '</tbody></table>';
+                    }
                 },
                 error : function() {
                     alert("token无效或过期");
@@ -32,7 +56,9 @@
 </head>
 <body>
 <div >
-    <button class="btn" onclick="tasks()">查询所有备忘录</button>
+    <button class="btn btn-success" onclick="tasks()">查询所有备忘录</button>
+
+    <div id="div1" style="padding: 15px;"></div>
 </div>
 </body>
 </html>
