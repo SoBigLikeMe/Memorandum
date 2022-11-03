@@ -18,6 +18,7 @@ type UserId struct{}
 func (service UserService) Register() serialzer.Response {
 	var user model.User
 	var count int
+
 	model.DB.Model(&model.User{}).Where("user_name=?", service.UserName).First(&user).Count(&count)
 	if count == 1 {
 		return serialzer.Response{
@@ -27,6 +28,7 @@ func (service UserService) Register() serialzer.Response {
 			Error:  "",
 		}
 	}
+
 	user.UserName = service.UserName
 	//加密
 

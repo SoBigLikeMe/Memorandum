@@ -11,11 +11,20 @@
 	<div class="wrapper">
 		<form class="form-signin" action="http://localhost:3000/api/v1/user/register" method="post" id="form1">
 			<h2 class="form-signin-heading text-center">注册</h2>
-			<input type="text" class="form-control" name="user_name" placeholder="Username">
-			<input type="password" class="form-control" name="password" placeholder="Password" required="">
+			<input type="text" class="form-control" name="user_name" placeholder="Username" minlength="3">
+			<input type="password" class="form-control" name="password" placeholder="Password" required="" minlength="3">
 			<button class="btn btn-lg btn-primary btn-block" form="form1">register</button>
 		</form>
 	</div>
 </body>
 </html>
-`
+
+<script src="https://code.jquery.com/jquery-3.6.1.js">
+	function checklength() {
+		var dom = document.getElementsByName('user_name').value;
+		if (dom.length < 5) {
+			alert();
+		}
+	}
+</script>
+
